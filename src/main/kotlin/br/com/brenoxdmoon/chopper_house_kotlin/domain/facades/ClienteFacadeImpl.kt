@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 @Component
 class ClienteFacadeImpl(private val clienteService: ClienteService) : ClienteFacade {
     override fun salvarCliente(cliente: ClienteRequestDTO): ClienteResponseDTO {
-
+        val clienteSalvo = clienteService.salvarCliente(cliente)
         TODO("Not yet implemented")
     }
 }
