@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull
 
 @Entity
 @Table(name = "cartao_credito")
-class CartaoCreditoModel(
+data class CartaoCreditoModel(
     @NotBlank
     @NotNull
     private val numeroCartao: String,
@@ -29,4 +29,4 @@ class CartaoCreditoModel(
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private val cliente: ClienteModel
-)
+) : DomainEntity()
