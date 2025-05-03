@@ -1,32 +1,30 @@
 package br.com.brenoxdmoon.chopper_house_kotlin.resources.mysql.cliente.entities
 
-import jakarta.persistence.*
+import jakarta.persistence.Entity
+import jakarta.persistence.Table
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 
+//TODO: colocar as anotações de validação em uma classe DTO
 @Entity
 @Table(name = "cartao_credito")
-data class CartaoCreditoModel(
+class CartaoCreditoModel(
     @NotBlank
     @NotNull
-    private val numeroCartao: String,
+    val numeroCartao: String,
 
-    @Enumerated(EnumType.STRING)
-    private val bandeira: String,
-
-    @NotBlank
-    @NotNull
-    private val nomeImpresso: String,
+    val bandeira: String,
 
     @NotBlank
     @NotNull
-    private val validade: String,
+    val nomeImpresso: String,
 
     @NotBlank
     @NotNull
-    private val codigoSeguranca: String,
+    val validade: String,
 
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private val cliente: ClienteModel
-) : DomainEntity()
+    @NotBlank
+    @NotNull
+    val codigoSeguranca: String,
+
+) : PersistDomainEntity()

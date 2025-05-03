@@ -4,35 +4,35 @@ import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 
+//TODO: colocar as anotações de validação em uma classe DTO
 @Entity
 @Table(name = "endereco")
 class EnderecoModel(
     @NotBlank(message = "Logradouro não pode estar em branco")
     @NotNull
-    private val logradouro: String,
+    val logradouro: String,
 
     @NotBlank(message = "Número do endereço não pode estar em branco")
     @NotNull
-    private val numero: String,
+    val numero: String,
 
     @NotBlank(message = "CEP não pode estar em branco")
     @NotNull
-    private val cep: String,
+    val cep: String,
 
-    private val complemento: String? = null,
+    val complemento: String? = null,
 
     @NotBlank(message = "Cidade não pode estar em branco")
     @NotNull
-    private val cidade: String,
+    val cidade: String,
 
     @NotBlank(message = "Estado não pode estar em branco")
     @NotNull
-    private val estado: String,
+    val estado: String,
 
-    @Enumerated(EnumType.STRING)
-    private val tipoEndereco: String,
+    val tipoEndereco: String,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id")
-    private val cliente: ClienteModel
-)
+    val cliente: ClienteModel
+) : PersistDomainEntity()

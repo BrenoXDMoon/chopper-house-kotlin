@@ -1,20 +1,22 @@
 package br.com.brenoxdmoon.chopper_house_kotlin.application.web.controllers
 
+import br.com.brenoxdmoon.chopper_house_kotlin.application.dtos.ClienteDTO
+import br.com.brenoxdmoon.chopper_house_kotlin.application.dtos.ClienteResponseDTO
 import br.com.brenoxdmoon.chopper_house_kotlin.application.facades.ClienteFacade
-import br.com.brenoxdmoon.chopper_house_kotlin.application.web.dtos.ClienteRequestDTO
-import br.com.brenoxdmoon.chopper_house_kotlin.application.web.dtos.ClienteResponseDTO
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
 
 @RestController
-@RequestMapping("/cliente")
-class ClienteController(private val clienteFacade: ClienteFacade) {
+@RequestMapping("/clientes")
+class ClienteController(
+    private val clienteFacade: ClienteFacade
+) {
 
     @PostMapping
-    fun salvarCliente(cliente: ClienteRequestDTO): ResponseEntity<ClienteResponseDTO> {
-        clienteFacade.salvarCliente(cliente)
-        TODO()
-    }
+    fun criarCliente(@RequestBody clienteDTO: ClienteDTO): ResponseEntity<ClienteResponseDTO> =
+        ResponseEntity.status(HttpStatus.CREATED).body(clienteFacade.criarCliente(clienteDTO))
 }

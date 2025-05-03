@@ -5,6 +5,8 @@ plugins {
     kotlin("plugin.noarg") version "1.9.25"
     id("org.springframework.boot") version "3.3.3"
     id("io.spring.dependency-management") version "1.1.6"
+    id("org.jlleitschuh.gradle.ktlint") version "11.3.2"
+    id("io.gitlab.arturbosch.detekt") version "1.23.1"
 }
 
 noArg {
@@ -30,7 +32,6 @@ repositories {
     mavenCentral()
 }
 
-
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -45,7 +46,9 @@ dependencies {
     testImplementation("org.springframework.amqp:spring-rabbit-test")
     testImplementation("org.springframework.security:spring-security-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.1")
 }
+
 kotlin {
     compilerOptions {
         freeCompilerArgs.addAll("-Xjsr305=strict")
@@ -54,4 +57,21 @@ kotlin {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+ktlint {
+    version.set("0.50.0")
+    android.set(false)
+    outputToConsole.set(true)
+    ignoreFailures.set(false)
+    enableExperimentalRules.set(true)
+    disabledRules.set(setOf("no-wildcard-imports"))
+}
+
+detekt {
+    toolVersion = "1.23.1"
+    config = files("config/detekt/detekt.yml")
+    buildUponDefaultConfig = true
+    allRules = false
+    autoCorrect = true
 }

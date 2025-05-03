@@ -1,3 +1,36 @@
+server:
+  port: 8080
+
 spring:
   application:
-    name: chopper-house-kotlin
+    name: chopper-house-games
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?useSSL=false&serverTimezone=UTC
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+  jackson:
+    serialization:
+      indent_output: true
+    property-naming-strategy: com.fasterxml.jackson.databind.PropertyNamingStrategies.KebabCaseStrategy
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+logging:
+  level:
+    root: INFO
+    br.com.banco.clienteservice: DEBUG
+    org.springframework: WARN
