@@ -1,12 +1,11 @@
 package br.com.brenoxdmoon.chopper_house_kotlin.domain.cliente.entities
 
 import br.com.brenoxdmoon.chopper_house_kotlin.application.dtos.ClienteResponseDTO
-import br.com.brenoxdmoon.chopper_house_kotlin.resources.mysql.cliente.entities.CartaoCreditoModel
-import br.com.brenoxdmoon.chopper_house_kotlin.resources.mysql.cliente.entities.EnderecoModel
+import br.com.brenoxdmoon.chopper_house_kotlin.application.dtos.toResponseDTO
 import java.time.LocalDateTime
 
 data class Cliente(
-    val id: Long?,
+    val id: Long,
     val dataAtualizacao: LocalDateTime,
     val ativo: Boolean,
     val nomeCompleto: String,
@@ -14,8 +13,8 @@ data class Cliente(
     val dataNascimento: String,
     val senha: String,
     val cpf: String,
-    val enderecos: List<EnderecoModel>,
-    val cartoes: List<CartaoCreditoModel>,
+    val enderecos: List<Endereco>,
+    val cartoes: List<CartaoCredito>,
     val tipoCliente: String,
     val telefone: String,
     val roles: String,
@@ -33,9 +32,9 @@ data class Cliente(
         telefone = this.telefone,
         dataNascimento = this.dataNascimento,
         senha = this.senha,
-        enderecos = this.enderecos ?: emptyList(),
-        cartoes = this.cartoes ?: emptyList(),
-        dataAtualizacao = this.dataAtualizacao ?: LocalDateTime.now(),
+        enderecos = this.enderecos.map { it.toResponseDTO() },
+        cartoes = this.cartoes.map { it.toResponseDTO() },
+        dataAtualizacao = this.dataAtualizacao,
         ativo = this.ativo ?: false,
         tipoCliente = this.tipoCliente,
         roles = this.roles,

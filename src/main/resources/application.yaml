@@ -23,7 +23,7 @@ spring:
   jackson:
     serialization:
       indent_output: true
-    property-naming-strategy: com.fasterxml.jackson.databind.PropertyNamingStrategies.KebabCaseStrategy
+    property-naming-strategy: KEBAB_CASE
 
   mvc:
     pathmatch:

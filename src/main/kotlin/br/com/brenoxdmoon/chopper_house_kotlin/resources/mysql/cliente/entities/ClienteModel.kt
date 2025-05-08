@@ -29,23 +29,20 @@ class ClienteModel(
     @Column(name = "tipo_cliente")
     val tipoCliente: String,
     val roles: String,
-) : PersistDomainEntity() {
-    fun toEntity(): Cliente = Cliente(
-        id = this.id,
-        nomeCompleto = this.nomeCompleto,
-        email = this.email,
-        cpf = this.cpf,
-        telefone = this.telefone,
-        dataNascimento = this.dataNascimento,
-        senha = this.senha,
-        enderecos = this.enderecos ?: emptyList(),
-        cartoes = this.cartoes ?: emptyList(),
-        dataAtualizacao = this.dataAtualizacao ?: LocalDateTime.now(),
-        ativo = this.ativo ?: false,
-        tipoCliente = this.tipoCliente,
-        roles = this.roles,
-    )
-}
+) : PersistDomainEntity()
 
-
-
+fun ClienteModel.toEntity(): Cliente = Cliente(
+    id = this.id ?: throw IllegalArgumentException("cartao deve ser nulo ou vazio"), // TODO: incluir erro semântico,
+    nomeCompleto = this.nomeCompleto,
+    email = this.email,
+    cpf = this.cpf,
+    telefone = this.telefone,
+    dataNascimento = this.dataNascimento,
+    senha = this.senha,
+    enderecos = this.enderecos?.map { it.toEntity() } ?: emptyList(),
+    cartoes = this.cartoes?.map { it.toEntity() } ?: emptyList(),
+    dataAtualizacao = this.dataAtualizacao ?: LocalDateTime.now(),
+    ativo = this.ativo ?: false,
+    tipoCliente = this.tipoCliente,
+    roles = this.roles,
+)
